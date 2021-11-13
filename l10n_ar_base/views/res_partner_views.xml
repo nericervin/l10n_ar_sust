@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_res_partner_filter" model="ir.ui.view">
+      <field name="name">partner_documents.view_partner_filter</field>
+      <field name="inherit_id" ref="base.view_res_partner_filter" />
+      <field name="model">res.partner</field>
+      <field type="xml" name="arch">
+        <field name="name" position="after">
+          <field name="id_numbers"/>
+        </field>
+      </field>
+    </record>
+
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">partner_documents.view_partner_form</field>
+        <field name="inherit_id" ref="partner_identification.view_partner_form" />
+        <field name="model">res.partner</field>
+        <field type="xml" name="arch">
+            <form>
+                <field name="cuit" invisible="1"/>
+            </form>
+            <field name="vat" position="attributes">
+                <attribute name="attrs">{'invisible': [('country_id', '=', 10)]}</attribute>
+            </field>
+            <field name="category_id" position="before">
+                <label 
+                  for="main_id_number" 
+                  string="ID Principal" 
+                  attrs="{
+                    'invisible': ['|', ('country_id', '!=', 10), ('parent_id','!=',False)]
+                  }"
+                />
+                <div 
+                  attrs="{
+                    'invisible': ['|', ('country_id', '!=', 10), ('parent_id','!=',False)]
+                  }"
+                >
+                    <field
+                        name="main_id_category_id"
+                        options="{'no_open': True, 'no_create': True}"
+                        placeholder="Category"
+                        attrs="{
+                          'invisible': ['|', ('country_id', '!=', 10), ('parent_id','!=',False)], 
+                          'required': [('country_id', '=', 10), ('parent_id', '=', False)]
+                        }"
+                    
+                        class="oe_inline"/>-
+                    <field
+                        name="main_id_number"
+                        placeholder="Number"
+                        attrs="{
+                          'invisible': ['|', ('country_id', '!=', 10), ('parent_id','!=',False)], 
+                          'required': ['|', ('main_id_category_id', '!=', False), ('country_id', '=', 10), ('parent_id', '=', False)]
+                        }"
+                        class="oe_inline"/>
+                </div>
+            </field>
+            <page name="id_numbers" position="attributes">
+                <attribute name="groups">l10n_ar_base.group_multiple_id_numbers</attribute>
+            </page>
+        </field>
+    </record>
+</odoo>
