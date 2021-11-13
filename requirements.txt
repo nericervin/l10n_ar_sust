@@ -1,0 +1,7 @@
+pyOpenSSL==17.5.0
+cryptography==2.3.1
+httplib2==0.9.2
+asn1crypto==0.24.0
+suds-jurko
+py3afipws==0.7.0
+py3simplesoap==0.1
