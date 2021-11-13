@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<template id="report_layout_ar" inherit_id="web.external_layout_boxed">
+			<xpath expr="//div[hasclass('col-xs-6', 'text-right', 'mb4')]" position="replace">
+				<div class="col-xs-6 text-right mb4">
+					<div class="mb4">
+						<span class="company_address">
+							<strong><h4 class="mt0" t-field="company.name"/></strong><br/>
+							C.U.I.T.: <span t-field="company.main_id_number"/><br/>
+							<t t-if="company.gross_income_type == 'no_liquida'">
+								Nro.Ing.Brutos.: NO LIQUIDA<br/>
+							</t>
+							<t t-if="company.gross_income_type == 'local'">
+								Nro.Ing.Brutos.: <span t-field="company.gross_income_number"/><br/>
+							</t>
+							<t t-if="company.gross_income_type == 'multilateral'">
+								Nro.Ing.Brutos.: <span t-field="company.gross_income_number"/><br/>
+							</t>
+							Fecha Inicio Actividad: <span t-field="company.start_date"/><br/>
+							<span t-field="company.street"/><br/>
+							<span t-field="company.city"/>, <span t-field="company.zip"/><br/>
+							<span t-field="company.state_id.name"/><br/>
+							<span t-field="company.country_id.name"/>
+						</span>
+					</div>
+				</div>
+			</xpath>
+		</template>
+	</data>
+</odoo>

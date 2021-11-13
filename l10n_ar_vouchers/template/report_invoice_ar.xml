@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<template id="report_invoice_ar" inherit_id="account.report_invoice_document">
+			<xpath expr="//div[@name='invoice_address']" position="before">
+				<div style="padding-top:12px;" class="text-center">
+					<p>
+						<h1>
+							<span t-field="o.journal_document_type_id.document_type_id.document_letter_id.name"/>
+						</h1>
+						<h7>
+							Código: 0<span t-field="o.journal_document_type_id.document_type_id.code"/>
+						</h7>
+					</p>
+				</div>
+			</xpath>
+			<xpath expr="//div[@name='invoice_address']" position="replace"></xpath>
+			<xpath expr="//div[hasclass('row', 'mt32', 'mb32')]" position="replace">
+				<div>
+					<strong>ORIGINAL</strong>
+				</div>
+				<div t-if="o.date_invoice">
+					<strong>Fecha de Factura: <span t-field="o.date_invoice"/></strong>
+				</div>
+				<div t-if="o.date_due and o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">
+					<strong>Fecha Vto. de Pago: <span t-field="o.date_due"/></strong>
+				</div>
+				<br/>
+				Sr(s): <span t-field="o.partner_id.name"/><br/>
+				Domicilio:
+				<span t-field="o.partner_id.street"/>,
+				<span t-field="o.partner_id.city"/>,
+				<span t-field="o.partner_id.state_id.name"/><br/>
+				C.U.I.T.:
+				<span t-field="o.partner_id.main_id_number"/><br/>
+				Tipo de Responsabilidad:
+				<span t-field="o.partner_id.afip_responsability_type_id"/>
+				<br/><br/>
+			</xpath>
+			<xpath expr="//div[hasclass('clearfix')]" position="after">
+				<br/><br/><br/>
+				<div>
+					<div style="margin-left:-27px;">
+						<img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.afip_barcode, 280, 50)" style=""/>
+					</div>
+					<br/>
+					CAE N°:
+					<span t-field="o.afip_auth_code"/><br/>
+					Fecha Vto CAE:
+					<span t-field="o.afip_auth_code_due"/><br/>
+				</div>
+				<!-- TODO Move QR to the right section-->
+				<!-- <img t-att-src="'/report/barcode/QR/%s' % 'https://mastercore.net/'" width="100" height="100"/> <br/> -->
+			</xpath>
+		</template>
+	</data>
+</odoo>
